@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Informasi event, jadwal pertandingan, hasil pertandingan futsal IFL Event dan Fafage Academy Pontianak.">
+  <title>IFL Event × Fafage Academy Pontianak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="site-header">
+    <a class="brand" href="#beranda" aria-label="IFL Event beranda">
+      <img src="assets/ifl-event-logo.jpeg" alt="Logo IFL Event">
+      <span><b>IFL <i>EVENT</i></b><small>FUTSAL • COMMUNITY • COMPETITION</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <a href="#event">Event</a><a href="#jadwal">Jadwal</a><a href="#hasil">Hasil</a><a href="#academy">Academy</a><a href="#kontak" class="nav-cta">Hubungi Panitia ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section-wrap" id="beranda">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="live-dot"></span> PUSAT INFORMASI FUTSAL PONTIANAK</div>
+        <h1>BUKAN SEKADAR<br><span>PERTANDINGAN.</span><br>INI TENTANG <em>SEMANGAT.</em></h1>
+        <p class="hero-lead">Rumah untuk kompetisi, talenta muda, dan komunitas futsal. Ikuti event IFL, pantau jadwal, dan rayakan setiap gol bersama Fafage Academy Pontianak.</p>
+        <div class="hero-actions"><a class="btn btn-gold" href="#event">Jelajahi Event <span>↘</span></a><a class="btn btn-outline" href="#jadwal">Lihat Jadwal <span>→</span></a></div>
+        <div class="hero-mini-stats"><div><strong>01</strong><span>SPORTIVITAS</span></div><div><strong>02</strong><span>KOMUNITAS</span></div><div><strong>03</strong><span>GENERASI</span></div></div>
+      </div>
+      <div class="hero-art">
+        <div class="art-glow"></div><div class="hero-logo-frame"><img src="assets/ifl-event-logo.jpeg" alt="Lambang IFL Event"></div>
+        <div class="floating-tag tag-top"><span>✦</span> PLAY WITH PURPOSE</div>
+        <div class="floating-tag tag-bottom"><b>IFL</b><span>FOOTBALL CULTURE</span></div>
+        <div class="hero-number">PONTIANAK / ID</div>
+      </div>
+      <div class="hero-bottomline"><span>IFL EVENT — SEASON / COMMUNITY</span><span>SCROLL TO EXPLORE ↓</span></div>
+    </section>
+
+    <section class="ticker" aria-label="Slogan"><div>ONE TEAM <span>✳</span> ONE DREAM <span>✳</span> PLAY FAIR <span>✳</span> MAKE HISTORY <span>✳</span> ONE TEAM <span>✳</span> ONE DREAM <span>✳</span> PLAY FAIR <span>✳</span></div></section>
+
+    <section class="section section-wrap" id="event">
+      <div class="section-heading"><div><p class="eyebrow">KALENDER KOMPETISI</p><h2>EVENT <span>TERBARU</span></h2></div><p class="section-note">Dari kick-off pertama hingga peluit akhir.<br>Temukan agenda berikutnya di sini.</p></div>
+      <div class="event-grid" id="eventGrid"><div class="loading-card">Menyiapkan kalender event...</div></div>
+    </section>
+
+    <section class="schedule-section" id="jadwal">
+      <div class="section-wrap">
+        <div class="section-heading"><div><p class="eyebrow">FIXTURE / MATCHDAY</p><h2>JADWAL <span>PERTANDINGAN</span></h2></div><p class="section-note">Catat waktunya. Dukung timmu.<br>Junjung tinggi fair play.</p></div>
+        <div class="filter-row"><div class="filter-pills" role="group" aria-label="Filter pertandingan"><button class="filter active" data-filter="all">Semua</button><button class="filter" data-filter="Terjadwal">Akan Main</button><button class="filter" data-filter="Selesai">Selesai</button></div><span class="tiny-label">OFFICIAL MATCH CENTER</span></div>
+        <div class="match-list" id="matchList"><div class="loading-card">Memuat jadwal pertandingan...</div></div>
+      </div>
+    </section>
+
+    <section class="section section-wrap" id="hasil">
+      <div class="section-heading"><div><p class="eyebrow">FULL TIME / SCOREBOARD</p><h2>HASIL <span>PERTANDINGAN</span></h2></div><p class="section-note">Setiap skor punya cerita.<br>Lihat hasil pertandingan terbaru.</p></div>
+      <div class="results-grid" id="resultsGrid"><div class="loading-card">Memuat hasil pertandingan...</div></div>
+    </section>
+
+    <section class="academy-section" id="academy">
+      <div class="academy-inner section-wrap">
+        <div class="academy-logo"><img src="assets/fafage-academy-logo.jpeg" alt="Logo Fafage Banua Academy"></div>
+        <div class="academy-copy"><p class="eyebrow">PLAYER DEVELOPMENT • PONTIANAK</p><h2>BUILD SKILL.<br><span>BUILD CHARACTER.</span></h2><p>Kenalkan Fafage Academy Pontianak — ruang untuk bertumbuh, belajar disiplin, mengasah teknik, dan membangun karakter melalui futsal. Karena pemain hebat dimulai dari fondasi yang kuat.</p><a class="btn btn-gold" href="https://www.instagram.com/fafageacademy.pontianak?cplk=dGxrbXJoem1wemF2" target="_blank" rel="noopener noreferrer">Kenal Academy <span>↗</span></a></div>
+        <div class="academy-stamp">TRAIN<br><b>HARD</b><br>STAY<br>HUMBLE</div>
+      </div>
+    </section>
+
+    <section class="section section-wrap about-section">
+      <div class="about-number">01<span>/</span>02</div><div><p class="eyebrow">LEBIH DARI SEBUAH EVENT</p><h2>GELORAKAN<br><span>FUTSAL LOKAL.</span></h2></div>
+      <p class="about-text" id="aboutText">IFL Event menghadirkan kompetisi futsal, kegiatan komunitas, expo, dan seminar. Bersama Fafage Academy Pontianak, kami mendukung perkembangan talenta futsal dan semangat sportivitas.</p>
+    </section>
+
+    <section class="contact-section" id="kontak">
+      <div class="section-wrap contact-inner"><div><p class="eyebrow">LET'S MAKE IT HAPPEN</p><h2>PUNYA TIM?<br><span>AYO MAIN.</span></h2><p class="contact-lead">Ingin ikut kompetisi, kolaborasi event, atau mengenal program academy? Hubungi kami.</p></div>
+        <div class="contact-card"><div class="contact-card-top"><span>CONTACT / OFFICIAL</span><span class="contact-icon">↗</span></div><h3 id="contactName">Panitia IFL Event</h3><p id="contactVenue">Pontianak, Kalimantan Barat</p><a id="phoneLink" class="contact-line" href="#kontak"><span>WHATSAPP / TELEPON</span><b id="contactPhone">Nomor kontak diatur admin</b></a><a id="emailLink" class="contact-line" href="#kontak"><span>EMAIL</span><b id="contactEmail">Belum diatur</b></a><div class="social-links"><a href="https://www.instagram.com/ifl.event?srtk=ODNkNXltdDlydTBw" target="_blank" rel="noopener noreferrer">INSTAGRAM IFL EVENT ↗</a><a href="https://www.instagram.com/fafageacademy.pontianak?cplk=dGxrbXJoem1wemF2" target="_blank" rel="noopener noreferrer">FAFAGE ACADEMY ↗</a></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="footer-brand" href="#beranda">IFL<span>EVENT</span></a><p>BUILT FOR THE GAME. ROOTED IN THE COMMUNITY.</p><span>© <span id="year"></span> IFL Event × Fafage Academy Pontianak</span></footer>
+</body>
+</html>

@@ -9,6 +9,24 @@
     if (Number.isNaN(d.getTime())) return value;
     return new Intl.DateTimeFormat('id-ID', { day:'2-digit', month:'short', year:'numeric' }).format(d);
   };
+  const fallbackData = {
+    events: [
+      { id: 1, title: 'IFL Open Cup', category: 'Turnamen', location: 'Pontianak', start_date: '2026-11-08', end_date: '2026-11-09', status: 'Akan Datang', description: 'Kompetisi futsal komunitas dan klub lokal dengan format grup dan babak final.' },
+      { id: 2, title: 'Fafage Academy Showcase', category: 'Academy', location: 'Pontianak', start_date: '2026-11-15', end_date: '2026-11-15', status: 'Akan Datang', description: 'Acara pembinaan skill, latihan terbuka, dan uji kemampuan pemain muda.' }
+    ],
+    matches: [
+      { id: 1, match_date: '2026-11-08', match_time: '18:00', home_team: 'Borneo FC', away_team: 'Pontianak United', home_score: null, away_score: null, venue: 'Lapangan IFL Arena', status: 'Terjadwal', round_name: 'Babak Grup A', event_title: 'IFL Open Cup' },
+      { id: 2, match_date: '2026-11-08', match_time: '20:00', home_team: 'Khatulistiwa XI', away_team: 'Fafage Academy', home_score: null, away_score: null, venue: 'Lapangan IFL Arena', status: 'Terjadwal', round_name: 'Babak Grup B', event_title: 'IFL Open Cup' },
+      { id: 3, match_date: '2026-11-01', match_time: '19:00', home_team: 'IFL All Stars', away_team: 'Pontianak City', home_score: 4, away_score: 2, venue: 'Lapangan Fafage', status: 'Selesai', round_name: 'Semifinal', event_title: 'IFL Open Cup' }
+    ],
+    settings: {
+      contact_name: 'Panitia IFL Event',
+      contact_phone: '6281234567890',
+      contact_email: 'ifl.event@gmail.com',
+      venue: 'Pontianak, Kalimantan Barat',
+      about: 'IFL Event menghadirkan kompetisi futsal, kegiatan komunitas, expo, dan seminar. Bersama Fafage Academy Pontianak, kami mendukung perkembangan talenta futsal dan semangat sportivitas.'
+    }
+  };
   const state = { events: [], matches: [], settings: {}, filter: 'all' };
 
   function eventCard(e) {
@@ -60,8 +78,9 @@
       Object.assign(state, await response.json());
       render();
     } catch (error) {
-      ['#eventGrid','#matchList','#resultsGrid'].forEach(sel => { const el = $(sel); if (el) el.innerHTML = '<div class="empty-state">Data belum dapat dimuat. Pastikan server website sedang berjalan, lalu muat ulang halaman.</div>'; });
-      console.error(error);
+      console.warn('Menggunakan data demo GitHub Pages.', error);
+      Object.assign(state, fallbackData);
+      render();
     }
   }
   $('#menuToggle')?.addEventListener('click', () => {
