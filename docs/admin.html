@@ -6,16 +6,12 @@
 </head>
 <body class="admin-body">
   <main class="admin-shell">
-    <header class="admin-top"><div><h1>IFL <span>CONTROL ROOM</span></h1><p>PANEL ADMIN · PRATINJAU STATIS</p></div><a class="admin-back" href="index.html">← LIHAT WEBSITE</a></header>
-    <div class="admin-card" role="status"><h2>Mode pratinjau</h2><p>Halaman admin ditampilkan untuk GitHub Pages, tetapi login dan pengelolaan data belum aktif karena GitHub Pages tidak menjalankan server/API. Untuk menggunakan panel admin, backend Node.js harus di-host terpisah.</p></div>
-    <section id="loginView" class="login-wrap">
-      <img src="assets/ifl-event-logo.jpeg" alt="Logo IFL Event"><h2>ADMIN LOGIN</h2><p>Login hanya tersedia setelah backend admin diaktifkan.</p>
-      <form id="loginForm">
-        <div class="form-field"><label for="username">USERNAME</label><input id="username" name="username" autocomplete="username" required maxlength="80" disabled></div>
-        <div class="form-field"><label for="password">PASSWORD</label><input id="password" name="password" type="password" autocomplete="current-password" required disabled></div>
-        <button class="admin-btn" type="button" style="width:100%" disabled>LOGIN BELUM TERSEDIA</button>
-      </form>
-      <p class="password-hint">Jangan masukkan kredensial admin di halaman statis ini. Halaman ini tidak mengirim atau memverifikasi password.</p>
+    <header class="admin-top"><div><h1>IFL <span>CONTROL ROOM</span></h1><p>PANEL ADMIN RESMI · BUTUH SERVER NODE.JS</p></div><a class="admin-back" href="index.html">← LIHAT WEBSITE</a></header>
+    <section class="login-wrap">
+      <img src="assets/ifl-event-logo.jpeg" alt="Logo IFL Event">
+      <h2>ADMIN BELUM DI SINI</h2>
+      <p>GitHub Pages hanya menampilkan website statis. Login dan pengelolaan event berjalan pada backend Node.js.</p>
+      <p class="password-hint">Deploy layanan Render dari repositori ini. Setelah deploy selesai, buka URL layanan Render dan tambahkan <b>/admin</b>. Masukkan username dan password yang disimpan di Environment Render, bukan di halaman GitHub Pages.</p>
     </section>
 
     <section id="dashboardView" class="admin-dashboard">

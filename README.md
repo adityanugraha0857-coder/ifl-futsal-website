@@ -98,3 +98,13 @@ ifl-futsal-website/
 5. Deploy, lalu buka URL publik yang disediakan Render. Website utama ada di `/` dan panel admin di `/admin`.
 
 Aplikasi sudah mendukung `DATA_DIR` agar file SQLite dan sesi dapat disimpan di persistent disk. Jangan gunakan hosting statis saja karena aplikasi memerlukan server Node.js.
+
+### Deploy Render gratis (tanpa disk persisten)
+
+File `render.yaml` menyediakan konfigurasi Render gratis. Buat Blueprint dari repositori ini di Render dan isi `ADMIN_USERNAME` serta `ADMIN_PASSWORD` sebagai environment variable rahasia di Render (username bebas; password minimal 12 karakter). `SESSION_SECRET` dibuat otomatis oleh Render.
+
+Setelah deploy selesai, gunakan URL layanan Render:
+- Website: `https://<nama-layanan>.onrender.com/`
+- Admin yang berfungsi: `https://<nama-layanan>.onrender.com/admin`
+
+GitHub Pages hanya menyediakan versi statis; form admin di sana bukan login aktif. Paket Render gratis juga tidak menyediakan persistent disk untuk konfigurasi ini. Database SQLite dan sesi dapat hilang saat instance tidur, restart, atau deploy ulang. Jangan gunakan untuk data penting; untuk data yang harus bertahan, pindah ke paket/hosting dengan disk persisten atau database terkelola.
