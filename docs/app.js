@@ -48,11 +48,6 @@
       <div class="match-state">${escapeHtml(m.status || (hasScore ? 'Selesai' : 'Terjadwal'))}<small>${escapeHtml(m.round_name || '')}</small></div>
     </article>`;
   }
-  function resultCard(m) {
-    return `<article class="result-card"><div class="result-head"><span>${escapeHtml(formatDate(m.match_date))}</span><b>FULL TIME</b></div>
-      <div class="result-teams"><div class="result-team">${escapeHtml(m.home_team)}</div><div class="result-score">${Number(m.home_score)} : ${Number(m.away_score)}</div><div class="result-team">${escapeHtml(m.away_team)}</div></div>
-      <div class="result-location"><span>${escapeHtml(m.event_title || m.round_name || 'Pertandingan')}</span><span>${escapeHtml(m.venue || 'Pontianak')}</span></div></article>`;
-  }
   function groupedMatches(items, renderCard, cardContainerClass, descending = false) {
     const days = new Map();
     items.forEach(match => {
@@ -82,10 +77,6 @@
     $('#matchList').innerHTML = filtered.length
       ? groupedMatches(filtered, matchRow, 'match-category-matches')
       : '<div class="empty-state">Belum ada pertandingan untuk filter ini.</div>';
-    const results = state.matches.filter(m => m.home_score !== null && m.home_score !== undefined && m.away_score !== null && m.away_score !== undefined).sort((a,b) => (b.match_date+b.match_time).localeCompare(a.match_date+a.match_time)).slice(0,3);
-    $('#resultsGrid').innerHTML = results.length
-      ? groupedMatches(results, resultCard, 'result-category-cards', true)
-      : '<div class="empty-state">Hasil pertandingan akan tampil di sini setelah skor diperbarui oleh panitia.</div>';
     const s = state.settings;
     $('#contactName').textContent = s.contact_name || 'Panitia IFL Event';
     $('#contactVenue').textContent = s.venue || 'Pontianak, Kalimantan Barat';
