@@ -53,14 +53,39 @@
       <div class="result-teams"><div class="result-team">${escapeHtml(m.home_team)}</div><div class="result-score">${Number(m.home_score)} : ${Number(m.away_score)}</div><div class="result-team">${escapeHtml(m.away_team)}</div></div>
       <div class="result-location"><span>${escapeHtml(m.event_title || m.round_name || 'Pertandingan')}</span><span>${escapeHtml(m.venue || 'Pontianak')}</span></div></article>`;
   }
+  function groupedMatches(items, renderCard, cardContainerClass, descending = false) {
+    const days = new Map();
+    items.forEach(match => {
+      const date = match.match_date || '';
+      const category = String(match.event_category || '').trim() || 'Kategori umum';
+      if (!days.has(date)) days.set(date, new Map());
+      const categories = days.get(date);
+      if (!categories.has(category)) categories.set(category, []);
+      categories.get(category).push(match);
+    });
+    return [...days.entries()]
+      .sort(([dateA], [dateB]) => dateA.localeCompare(dateB) * (descending ? -1 : 1))
+      .map(([date, categories]) => `<section class="match-day-group">
+        <h3 class="match-group-date">${escapeHtml(formatDate(date))}</h3>
+        ${[...categories.entries()].sort(([categoryA], [categoryB]) => categoryA.localeCompare(categoryB, 'id'))
+          .map(([category, grouped]) => `<section class="match-category-group">
+            <h4 class="match-group-category">${escapeHtml(category)}</h4>
+            <div class="${cardContainerClass}">${grouped.map(renderCard).join('')}</div>
+          </section>`).join('')}
+      </section>`).join('');
+  }
   function render() {
     const eventGrid = $('#eventGrid');
     const upcoming = [...state.events].sort((a,b) => a.start_date.localeCompare(b.start_date));
     eventGrid.innerHTML = upcoming.length ? upcoming.map(eventCard).join('') : '<div class="empty-state">Belum ada event yang dipublikasikan. Silakan cek kembali nanti.</div>';
     const filtered = [...state.matches].filter(m => state.filter === 'all' || (state.filter === 'Selesai' ? m.status === 'Selesai' : m.status !== 'Selesai')).sort((a,b) => (a.match_date+a.match_time).localeCompare(b.match_date+b.match_time));
-    $('#matchList').innerHTML = filtered.length ? filtered.map(matchRow).join('') : '<div class="empty-state">Belum ada pertandingan untuk filter ini.</div>';
+    $('#matchList').innerHTML = filtered.length
+      ? groupedMatches(filtered, matchRow, 'match-category-matches')
+      : '<div class="empty-state">Belum ada pertandingan untuk filter ini.</div>';
     const results = state.matches.filter(m => m.home_score !== null && m.home_score !== undefined && m.away_score !== null && m.away_score !== undefined).sort((a,b) => (b.match_date+b.match_time).localeCompare(a.match_date+a.match_time)).slice(0,3);
-    $('#resultsGrid').innerHTML = results.length ? results.map(resultCard).join('') : '<div class="empty-state">Hasil pertandingan akan tampil di sini setelah skor diperbarui oleh panitia.</div>';
+    $('#resultsGrid').innerHTML = results.length
+      ? groupedMatches(results, resultCard, 'result-category-cards', true)
+      : '<div class="empty-state">Hasil pertandingan akan tampil di sini setelah skor diperbarui oleh panitia.</div>';
     const s = state.settings;
     $('#contactName').textContent = s.contact_name || 'Panitia IFL Event';
     $('#contactVenue').textContent = s.venue || 'Pontianak, Kalimantan Barat';

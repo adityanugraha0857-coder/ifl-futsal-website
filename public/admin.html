@@ -31,6 +31,7 @@
             <div class="form-field full"><label for="eventTitle">NAMA EVENT *</label><input id="eventTitle" required maxlength="120" placeholder="Contoh: IFL Futsal Championship 2026"></div>
             <div class="form-field"><label for="eventCategory">KATEGORI</label><select id="eventCategory"><option>Turnamen</option><option>Friendly Match</option><option>Akademi</option><option>Expo</option><option>Seminar</option><option>Komunitas</option></select></div>
             <div class="form-field"><label for="eventStatus">STATUS</label><select id="eventStatus"><option>Akan Datang</option><option>Pendaftaran Dibuka</option><option>Berlangsung</option><option>Selesai</option></select></div>
+            <div class="form-field full"><label for="eventCategories">KATEGORI PERTANDINGAN / DIVISI</label><textarea id="eventCategories" maxlength="1000" placeholder="Contoh: U-12, U-15, U-17, Umum (pisahkan dengan koma atau baris baru)"></textarea><small class="password-hint">Buat maksimal 20 kategori untuk event ini. Pertandingan dapat dimasukkan ke salah satu kategori.</small></div>
             <div class="form-field"><label for="eventStart">TANGGAL MULAI *</label><input id="eventStart" type="date" required></div>
             <div class="form-field"><label for="eventEnd">TANGGAL SELESAI</label><input id="eventEnd" type="date"></div>
             <div class="form-field full"><label for="eventLocation">LOKASI</label><input id="eventLocation" maxlength="160" placeholder="GOR / lapangan, Pontianak"></div>
@@ -43,10 +44,13 @@
         <div class="admin-card"><h2 id="matchFormTitle">Tambah pertandingan</h2><form id="matchForm"><input type="hidden" id="matchId">
           <div class="admin-form-grid">
             <div class="form-field full"><label for="matchEvent">EVENT TERKAIT</label><select id="matchEvent"><option value="">Tanpa event khusus</option></select></div>
+            <div class="form-field full"><label for="matchCategory">KATEGORI EVENT</label><select id="matchCategory"><option value="">Pilih event terlebih dahulu</option></select></div>
             <div class="form-field"><label for="matchDate">TANGGAL *</label><input id="matchDate" type="date" required></div>
             <div class="form-field"><label for="matchTime">JAM</label><input id="matchTime" type="time"></div>
             <div class="form-field"><label for="homeTeam">TIM HOME *</label><input id="homeTeam" maxlength="100" required placeholder="Nama tim A"></div>
             <div class="form-field"><label for="awayTeam">TIM AWAY *</label><input id="awayTeam" maxlength="100" required placeholder="Nama tim B"></div>
+            <div class="form-field"><label for="homeLogo">LOGO TIM HOME</label><input id="homeLogo" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"><div class="logo-upload-preview"><img id="homeLogoPreview" alt="Preview logo tim home" hidden><span id="homeLogoStatus">Belum ada logo.</span></div><small class="password-hint">Logo otomatis menyesuaikan kotak tanpa dipotong atau berubah bentuk.</small><label id="homeLogoRemoveWrap" class="logo-remove" hidden><input id="homeLogoRemove" type="checkbox"> Hapus logo tim home</label></div>
+            <div class="form-field"><label for="awayLogo">LOGO TIM AWAY</label><input id="awayLogo" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"><div class="logo-upload-preview"><img id="awayLogoPreview" alt="Preview logo tim away" hidden><span id="awayLogoStatus">Belum ada logo.</span></div><small class="password-hint">Logo otomatis menyesuaikan kotak tanpa dipotong atau berubah bentuk.</small><label id="awayLogoRemoveWrap" class="logo-remove" hidden><input id="awayLogoRemove" type="checkbox"> Hapus logo tim away</label></div>
             <div class="form-field"><label for="homeScore">SKOR HOME</label><input id="homeScore" type="number" min="0" max="99" placeholder="Kosongkan jika belum main"></div>
             <div class="form-field"><label for="awayScore">SKOR AWAY</label><input id="awayScore" type="number" min="0" max="99" placeholder="Kosongkan jika belum main"></div>
             <div class="form-field"><label for="matchStatus">STATUS</label><select id="matchStatus"><option>Terjadwal</option><option>Selesai</option><option>Ditunda</option><option>Dibatalkan</option></select></div>
@@ -54,6 +58,14 @@
             <div class="form-field full"><label for="matchVenue">LAPANGAN / LOKASI</label><input id="matchVenue" maxlength="160" placeholder="GOR ..."></div>
           </div><button class="admin-btn" type="submit">SIMPAN PERTANDINGAN ↗</button> <button class="admin-btn secondary" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button><p class="form-message" id="matchMessage" role="status"></p>
         </form></div>
+        <div class="admin-card"><h2>Impor lineup & ofisial dari Excel</h2>
+          <p class="password-hint">Unduh template, isi satu baris untuk setiap pemain atau ofisial, lalu unggah file .xlsx. Pertandingan dicocokkan berdasarkan tanggal dan nama kedua tim. Bagian pemain/ofisial yang diunggah akan menggantikan daftar sebelumnya pada sisi tersebut.</p>
+          <p><a class="admin-btn secondary" href="/api/admin/lineups/template">UNDUH TEMPLATE EXCEL ↧</a></p>
+          <form id="lineupForm">
+            <div class="form-field"><label for="lineupFile">FILE EXCEL (.XLSX) *</label><input id="lineupFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></div>
+            <button class="admin-btn" type="submit">UNGGAH & TAMPILKAN ↗</button><p class="form-message" id="lineupMessage" role="status"></p>
+          </form>
+        </div>
         <div class="admin-card"><h2>Jadwal & hasil</h2><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>TANGGAL</th><th>PERTANDINGAN</th><th>SKOR</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="matchesTable"></tbody></table></div></div>
       </section>
       <section id="settingsPanel" class="admin-panel"><div class="admin-card"><h2>Kontak panitia & profil</h2><form id="settingsForm">

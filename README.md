@@ -36,12 +36,33 @@ Database SQLite dibuat otomatis pada folder `data/` saat server dijalankan. Data
 - Login menggunakan username dan password yang diverifikasi server dengan bcrypt.
 - Membuat, mengedit, dan menghapus event.
 - Membuat, mengedit, dan menghapus jadwal pertandingan.
+- Mengunggah logo PNG, JPG, atau WEBP untuk tim home dan away pada setiap pertandingan.
+- Mengunduh template Excel, mengimpor susunan pemain dan ofisial per pertandingan, lalu menampilkannya pada detail jadwal website.
+- Membuka jadwal dan seluruh hasil khusus turnamen langsung dari tombol **LIHAT JADWAL** pada kartu event.
+- Membuat beberapa kategori/divisi untuk satu event, menetapkan kategori pada tiap pertandingan, dan menampilkan fixture per kategori pada halaman event tersendiri.
 - Mengisi atau mengosongkan skor; skor yang diisi akan tampil pada bagian hasil.
 - Mengatur status pertandingan, babak/grup, lapangan, event terkait.
 - Mengubah kontak WhatsApp, email, lokasi dan deskripsi.
 - Mengganti password admin.
 - Batas percobaan login, hash password bcrypt, cookie sesi HttpOnly/SameSite, validasi Origin pada permintaan perubahan data, dan sesi tersimpan di SQLite.
 - Database disimpan di server; API penambahan, perubahan, dan penghapusan memerlukan sesi admin yang valid.
+
+Logo tim dapat ditambahkan atau diganti melalui form tambah/edit pertandingan. Logo otomatis disesuaikan ke kotak dengan mempertahankan rasio aslinya, jadi tidak terpotong atau berubah bentuk. Pilih file pada bagian **LOGO TIM HOME** dan **LOGO TIM AWAY**; untuk menghapus logo tersimpan, edit pertandingan dan centang opsi hapus. Format yang diterima PNG, JPG, dan WEBP, maksimal 1 MB per logo. File logo disimpan di folder `team-logos/` dalam `DATA_DIR`, jadi gunakan penyimpanan persisten pada hosting agar logo tetap tersedia setelah restart atau deploy.
+
+### Event, kategori, dan halaman jadwal
+1. Saat menambah atau mengedit event, masukkan nama kategori/divisi seperti `U-12`, `U-15`, dan `Umum` pada kolom **KATEGORI PERTANDINGAN / DIVISI** (pisahkan dengan koma atau baris baru).
+2. Pada form pertandingan, pilih event dan kategori pertandingan yang sesuai.
+3. Halaman utama hanya menampilkan event. Tombol **LIHAT JADWAL** membuka halaman khusus `/event/<id>` berisi jadwal, hasil, lineup, dan filter kategori event.
+4. Saat kategori dihapus dari event, pertandingan dalam kategori tersebut tetap ada dan dipindahkan ke pilihan tanpa kategori.
+
+### Impor lineup dan ofisial
+1. Masuk ke `/admin`, lalu buka tab **PERTANDINGAN & SKOR**.
+2. Pada bagian **Impor lineup & ofisial dari Excel**, unduh template dan isi sheet `Data`.
+3. Isi satu baris untuk setiap pemain/ofisial. Tanggal dan nama tim harus cocok dengan jadwal; sisi tim adalah `Home` atau `Away`, dan jenis adalah `Pemain` atau `Ofisial`.
+4. Unggah file `.xlsx`. Pemain/ofisial untuk sisi dan jenis yang diunggah akan menggantikan daftar sebelumnya; bagian lain yang tidak disertakan tetap tersimpan.
+5. Lineup tersedia pada jadwal publik melalui tombol **Lineup & ofisial tim**.
+
+Kolom pemain yang wajib diisi: tanggal pertandingan, tim home, tim away, sisi tim, jenis, nama, dan nomor punggung (0–99). Untuk ofisial, isi nama serta posisi/jabatan dan kosongkan nomor punggung. Kolom jam digunakan bila ada lebih dari satu pertandingan dengan tanggal dan pasangan tim yang sama. Maksimal 500 baris data dan ukuran file 2 MB per impor.
 
 ## Sebelum dipublikasikan ke internet
 - Wajib gunakan HTTPS dan set `NODE_ENV=production`.

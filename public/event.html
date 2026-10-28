@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Jadwal dan hasil pertandingan event futsal IFL Event.">
+  <title>Jadwal Event — IFL Event</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/event.js" defer></script>
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="IFL Event beranda">
+      <img src="/assets/ifl-event-logo.jpeg" alt="Logo IFL Event">
+      <span><b>IFL <i>EVENT</i></b><small>FUTSAL • COMMUNITY • COMPETITION</small></span>
+    </a>
+    <a class="admin-back" href="/">← KEMBALI KE SEMUA EVENT</a>
+  </header>
+  <main>
+    <section class="event-detail-hero section-wrap">
+      <p class="eyebrow"><span class="live-dot"></span> OFFICIAL EVENT MATCH CENTER</p>
+      <p class="event-detail-type" id="eventType">TURNAMEN</p>
+      <h1 id="eventTitle">Memuat event...</h1>
+      <p class="event-detail-description" id="eventDescription"></p>
+      <div class="event-detail-meta"><span id="eventDates"></span><span id="eventLocation"></span><span id="eventStatus"></span></div>
+    </section>
+    <section class="schedule-section event-match-center">
+      <div class="section-wrap">
+        <div class="section-heading"><div><p class="eyebrow">COMPETITION DIVISIONS</p><h2>KATEGORI <span>EVENT</span></h2></div><p class="section-note">Pilih kategori untuk melihat<br>jadwal dan hasil pertandingannya.</p></div>
+        <div class="event-category-filters" id="eventCategoryFilters" role="group" aria-label="Kategori pertandingan"></div>
+        <div class="section-heading event-match-heading"><div><p class="eyebrow">FIXTURE / MATCHDAY</p><h2>JADWAL <span>PERTANDINGAN</span></h2></div><p class="section-note" id="matchSummary">Jadwal resmi turnamen.</p></div>
+        <div class="match-list" id="matchList"><div class="loading-card">Memuat jadwal pertandingan...</div></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/">IFL<span>EVENT</span></a><p>BUILT FOR THE GAME. ROOTED IN THE COMMUNITY.</p><span>© <span id="year"></span> IFL Event × Fafage Academy Pontianak</span><a class="admin-link" href="/admin">ADMIN ↗</a></footer>
+</body>
+</html>
