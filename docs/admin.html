@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+  <title>Admin Panel — IFL Event</title><link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <header class="admin-top"><div><h1>IFL <span>CONTROL ROOM</span></h1><p>PANEL ADMIN · PRATINJAU STATIS</p></div><a class="admin-back" href="index.html">← LIHAT WEBSITE</a></header>
+    <div class="admin-card" role="status"><h2>Mode pratinjau</h2><p>Halaman admin ditampilkan untuk GitHub Pages, tetapi login dan pengelolaan data belum aktif karena GitHub Pages tidak menjalankan server/API. Untuk menggunakan panel admin, backend Node.js harus di-host terpisah.</p></div>
+    <section id="loginView" class="login-wrap">
+      <img src="assets/ifl-event-logo.jpeg" alt="Logo IFL Event"><h2>ADMIN LOGIN</h2><p>Login hanya tersedia setelah backend admin diaktifkan.</p>
+      <form id="loginForm">
+        <div class="form-field"><label for="username">USERNAME</label><input id="username" name="username" autocomplete="username" required maxlength="80" disabled></div>
+        <div class="form-field"><label for="password">PASSWORD</label><input id="password" name="password" type="password" autocomplete="current-password" required disabled></div>
+        <button class="admin-btn" type="button" style="width:100%" disabled>LOGIN BELUM TERSEDIA</button>
+      </form>
+      <p class="password-hint">Jangan masukkan kredensial admin di halaman statis ini. Halaman ini tidak mengirim atau memverifikasi password.</p>
+    </section>
+
+    <section id="dashboardView" class="admin-dashboard">
+      <div class="admin-toolbar"><p id="welcomeText">Selamat datang, admin.</p><button id="logoutBtn" class="admin-logout" type="button">KELUAR ↗</button></div>
+      <div class="admin-tabs" role="tablist">
+        <button class="admin-tab active" data-panel="eventsPanel" type="button">EVENT</button>
+        <button class="admin-tab" data-panel="matchesPanel" type="button">PERTANDINGAN & SKOR</button>
+        <button class="admin-tab" data-panel="settingsPanel" type="button">KONTAK & PROFIL</button>
+        <button class="admin-tab" data-panel="passwordPanel" type="button">GANTI PASSWORD</button>
+      </div>
+      <section id="eventsPanel" class="admin-panel active">
+        <div class="admin-card"><h2 id="eventFormTitle">Tambah event baru</h2><form id="eventForm"><input type="hidden" id="eventId">
+          <div class="admin-form-grid">
+            <div class="form-field full"><label for="eventTitle">NAMA EVENT *</label><input id="eventTitle" required maxlength="120" placeholder="Contoh: IFL Futsal Championship 2026"></div>
+            <div class="form-field"><label for="eventCategory">KATEGORI</label><select id="eventCategory"><option>Turnamen</option><option>Friendly Match</option><option>Akademi</option><option>Expo</option><option>Seminar</option><option>Komunitas</option></select></div>
+            <div class="form-field"><label for="eventStatus">STATUS</label><select id="eventStatus"><option>Akan Datang</option><option>Pendaftaran Dibuka</option><option>Berlangsung</option><option>Selesai</option></select></div>
+            <div class="form-field"><label for="eventStart">TANGGAL MULAI *</label><input id="eventStart" type="date" required></div>
+            <div class="form-field"><label for="eventEnd">TANGGAL SELESAI</label><input id="eventEnd" type="date"></div>
+            <div class="form-field full"><label for="eventLocation">LOKASI</label><input id="eventLocation" maxlength="160" placeholder="GOR / lapangan, Pontianak"></div>
+            <div class="form-field full"><label for="eventDescription">DESKRIPSI</label><textarea id="eventDescription" maxlength="2000" placeholder="Informasi singkat event, pendaftaran, kategori peserta..."></textarea></div>
+          </div><button class="admin-btn" type="submit">SIMPAN EVENT ↗</button> <button class="admin-btn secondary" id="cancelEventEdit" type="button" hidden>BATAL EDIT</button><p class="form-message" id="eventMessage" role="status"></p>
+        </form></div>
+        <div class="admin-card"><h2>Daftar event</h2><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>EVENT</th><th>TANGGAL</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="eventsTable"></tbody></table></div></div>
+      </section>
+      <section id="matchesPanel" class="admin-panel">
+        <div class="admin-card"><h2 id="matchFormTitle">Tambah pertandingan</h2><form id="matchForm"><input type="hidden" id="matchId">
+          <div class="admin-form-grid">
+            <div class="form-field full"><label for="matchEvent">EVENT TERKAIT</label><select id="matchEvent"><option value="">Tanpa event khusus</option></select></div>
+            <div class="form-field"><label for="matchDate">TANGGAL *</label><input id="matchDate" type="date" required></div>
+            <div class="form-field"><label for="matchTime">JAM</label><input id="matchTime" type="time"></div>
+            <div class="form-field"><label for="homeTeam">TIM HOME *</label><input id="homeTeam" maxlength="100" required placeholder="Nama tim A"></div>
+            <div class="form-field"><label for="awayTeam">TIM AWAY *</label><input id="awayTeam" maxlength="100" required placeholder="Nama tim B"></div>
+            <div class="form-field"><label for="homeScore">SKOR HOME</label><input id="homeScore" type="number" min="0" max="99" placeholder="Kosongkan jika belum main"></div>
+            <div class="form-field"><label for="awayScore">SKOR AWAY</label><input id="awayScore" type="number" min="0" max="99" placeholder="Kosongkan jika belum main"></div>
+            <div class="form-field"><label for="matchStatus">STATUS</label><select id="matchStatus"><option>Terjadwal</option><option>Selesai</option><option>Ditunda</option><option>Dibatalkan</option></select></div>
+            <div class="form-field"><label for="matchRound">BABAK / GRUP</label><input id="matchRound" maxlength="100" placeholder="Penyisihan Grup A"></div>
+            <div class="form-field full"><label for="matchVenue">LAPANGAN / LOKASI</label><input id="matchVenue" maxlength="160" placeholder="GOR ..."></div>
+          </div><button class="admin-btn" type="submit">SIMPAN PERTANDINGAN ↗</button> <button class="admin-btn secondary" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button><p class="form-message" id="matchMessage" role="status"></p>
+        </form></div>
+        <div class="admin-card"><h2>Jadwal & hasil</h2><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>TANGGAL</th><th>PERTANDINGAN</th><th>SKOR</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="matchesTable"></tbody></table></div></div>
+      </section>
+      <section id="settingsPanel" class="admin-panel"><div class="admin-card"><h2>Kontak panitia & profil</h2><form id="settingsForm">
+        <div class="admin-form-grid">
+          <div class="form-field"><label for="settingName">NAMA KONTAK</label><input id="settingName" maxlength="250"></div>
+          <div class="form-field"><label for="settingPhone">WHATSAPP / TELEPON</label><input id="settingPhone" maxlength="250" placeholder="Contoh: 6281234567890"></div>
+          <div class="form-field"><label for="settingEmail">EMAIL</label><input id="settingEmail" type="email" maxlength="250"></div>
+          <div class="form-field"><label for="settingVenue">LOKASI UMUM</label><input id="settingVenue" maxlength="250"></div>
+          <div class="form-field full"><label for="settingAbout">DESKRIPSI IFL EVENT</label><textarea id="settingAbout" maxlength="2000"></textarea></div>
+        </div><button class="admin-btn" type="submit">SIMPAN PROFIL ↗</button><p class="form-message" id="settingsMessage" role="status"></p>
+      </form><p class="password-hint">Instagram resmi telah dipasang: @ifl.event dan @fafageacademy.pontianak. Untuk keamanan, nomor WhatsApp disimpan sebagai data teks dan dipakai membuat tautan WhatsApp.</p></div></section>
+      <section id="passwordPanel" class="admin-panel"><div class="admin-card"><h2>Ganti password admin</h2><form id="passwordForm" class="admin-form-grid">
+        <div class="form-field full"><label for="currentPassword">PASSWORD SAAT INI</label><input id="currentPassword" type="password" autocomplete="current-password" required></div>
+        <div class="form-field full"><label for="newPassword">PASSWORD BARU (MINIMAL 12 KARAKTER)</label><input id="newPassword" type="password" autocomplete="new-password" minlength="12" maxlength="200" required></div>
+        <div class="form-field full"><label for="confirmPassword">ULANGI PASSWORD BARU</label><input id="confirmPassword" type="password" autocomplete="new-password" minlength="12" maxlength="200" required></div>
+        <div class="form-field full"><button class="admin-btn" type="submit">PERBARUI PASSWORD ↗</button><p class="form-message" id="passwordMessage" role="status"></p></div>
+      </form><p class="password-hint">Gunakan password unik yang panjang. Jangan masukkan password admin ke dalam kode HTML atau membagikannya ke publik.</p></div></section>
+    </section>
+  </main>
+</body>
+</html>
