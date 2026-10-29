@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Pendaftaran Tim — IFL Event</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/register.js" defer></script>
+</head>
+<body class="registration-body">
+  <div class="topline"></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="IFL Event beranda">
+      <img src="/assets/ifl-event-logo.jpeg" alt="Logo IFL Event">
+      <span><b>IFL <i>EVENT</i></b><small>FUTSAL • COMMUNITY • COMPETITION</small></span>
+    </a>
+    <a class="admin-back" href="/">← WEBSITE IFL EVENT</a>
+  </header>
+  <main class="registration-shell">
+    <section class="registration-card">
+      <p class="eyebrow"><span class="live-dot"></span> FORMULIR PESERTA EVENT</p>
+      <p class="event-detail-type" id="registrationEventType">PENDAFTARAN TIM</p>
+      <h1 id="registrationEventTitle">Memuat event...</h1>
+      <p class="registration-event-meta" id="registrationEventMeta"></p>
+      <p class="registration-copy">Isi nama tim dan unggah logo. Pendaftaran akan ditinjau panitia sebelum tim ditampilkan di daftar peserta.</p>
+      <form id="registrationForm">
+        <div class="form-field">
+          <label for="teamName">NAMA TIM *</label>
+          <input id="teamName" name="team_name" required maxlength="100" autocomplete="organization" placeholder="Contoh: Fafage Academy">
+        </div>
+        <div class="form-field">
+          <label for="teamLogo">LOGO TIM (PNG, JPG, WEBP) *</label>
+          <input id="teamLogo" name="team_logo" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" required>
+          <small class="password-hint">Ukuran maksimal 1 MB. Unggah hanya logo yang boleh digunakan untuk keperluan event.</small>
+          <div class="registration-logo-preview" id="logoPreview" hidden><img id="logoPreviewImage" alt="Pratinjau logo tim"><span id="logoFileName"></span></div>
+        </div>
+        <button class="admin-btn" id="submitRegistration" type="submit">KIRIM PENDAFTARAN ↗</button>
+        <p class="form-message" id="registrationMessage" role="status"></p>
+      </form>
+      <section id="registrationSuccess" class="registration-success" hidden>
+        <h2>Pendaftaran terkirim</h2>
+        <p>Data tim sudah diterima dan menunggu persetujuan panitia.</p>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="/">IFL<span>EVENT</span></a><p>BUILT FOR THE GAME. ROOTED IN THE COMMUNITY.</p><span>© <span id="year"></span> IFL Event × Fafage Academy Pontianak</span></footer>
+</body>
+</html>

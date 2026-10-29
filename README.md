@@ -37,32 +37,44 @@ Database SQLite dibuat otomatis pada folder `data/` saat server dijalankan. Data
 - Membuat, mengedit, dan menghapus event.
 - Membuat, mengedit, dan menghapus jadwal pertandingan.
 - Mengunggah logo PNG, JPG, atau WEBP untuk tim home dan away pada setiap pertandingan.
-- Mengunduh template Excel, mengimpor susunan pemain dan ofisial per pertandingan, lalu menampilkannya pada detail jadwal website.
+- Menampilkan lineup dan ofisial yang sudah tersimpan pada detail jadwal website; fitur impor lineup sementara disembunyikan dari panel admin.
+- Mengimpor daftar peserta setiap event dari Excel, termasuk nama dan logo tim; halaman event menampilkan jumlah serta daftar logo peserta dengan navigasi khusus.
 - Membuka jadwal dan seluruh hasil khusus turnamen langsung dari tombol **LIHAT JADWAL** pada kartu event.
 - Membuat beberapa kategori/divisi untuk satu event, menetapkan kategori pada tiap pertandingan, dan menampilkan fixture per kategori pada halaman event tersendiri.
 - Mengisi atau mengosongkan skor; skor yang diisi akan tampil pada bagian hasil.
-- Mengatur status pertandingan, babak/grup, lapangan, event terkait.
-- Mengubah kontak WhatsApp, email, lokasi dan deskripsi.
+- Mengatur fase pertandingan (grup, gugur, atau lainnya), skor, dan adu penalti.
+- Menyimpan otomasi klasemen, kelolosan, dan bagan gugur untuk konfigurasi kompetisi yang sudah tersimpan; pengaturan klasemen sementara disembunyikan dari panel admin.
+- Mengatur status pertandingan, babak, lapangan, dan event terkait. Nama grup tidak lagi wajib; pertandingan fase grup tanpa nama grup dihitung bersama dalam satu klasemen "Liga".
+- Mengatur dua nomor WhatsApp admin, email, lokasi, dan deskripsi; tombol kontak Admin 1 dan Admin 2 ditampilkan pada halaman publik.
 - Mengganti password admin.
 - Batas percobaan login, hash password bcrypt, cookie sesi HttpOnly/SameSite, validasi Origin pada permintaan perubahan data, dan sesi tersimpan di SQLite.
 - Database disimpan di server; API penambahan, perubahan, dan penghapusan memerlukan sesi admin yang valid.
 
-Logo tim dapat ditambahkan atau diganti melalui form tambah/edit pertandingan. Logo otomatis disesuaikan ke kotak dengan mempertahankan rasio aslinya, jadi tidak terpotong atau berubah bentuk. Pilih file pada bagian **LOGO TIM HOME** dan **LOGO TIM AWAY**; untuk menghapus logo tersimpan, edit pertandingan dan centang opsi hapus. Format yang diterima PNG, JPG, dan WEBP, maksimal 1 MB per logo. File logo disimpan di folder `team-logos/` dalam `DATA_DIR`, jadi gunakan penyimpanan persisten pada hosting agar logo tetap tersedia setelah restart atau deploy.
+Logo tim dapat ditambahkan atau diganti melalui form tambah/edit pertandingan. Setelah event dipilih, pilih peserta dari daftar tim terdaftar untuk mengisi nama dan memasang logo peserta secara otomatis; tim yang tidak terdaftar tetap bisa dimasukkan manual. Logo otomatis disesuaikan ke kotak dengan mempertahankan rasio aslinya, jadi tidak terpotong atau berubah bentuk. Pilih file pada bagian **LOGO TIM HOME** dan **LOGO TIM AWAY** untuk mengganti logo pertandingan secara manual. Format yang diterima PNG, JPG, dan WEBP, maksimal 1 MB per logo. File logo disimpan di folder `team-logos/` dalam `DATA_DIR`, jadi gunakan penyimpanan persisten pada hosting agar logo tetap tersedia setelah restart atau deploy.
 
 ### Event, kategori, dan halaman jadwal
 1. Saat menambah atau mengedit event, masukkan nama kategori/divisi seperti `U-12`, `U-15`, dan `Umum` pada kolom **KATEGORI PERTANDINGAN / DIVISI** (pisahkan dengan koma atau baris baru).
-2. Pada form pertandingan, pilih event dan kategori pertandingan yang sesuai.
-3. Halaman utama hanya menampilkan event. Tombol **LIHAT JADWAL** membuka halaman khusus `/event/<id>` berisi jadwal, hasil, lineup, dan filter kategori event.
-4. Saat kategori dihapus dari event, pertandingan dalam kategori tersebut tetap ada dan dipindahkan ke pilihan tanpa kategori.
+2. Pada form pertandingan pilih event, kategori, dan isi jadwal, tim, serta skor seperti biasa.
+3. Tampilan publik klasemen/bagan dan pengaturan klasemen di admin untuk sementara disembunyikan. Otomasi serta konfigurasi kompetisi yang sudah tersimpan tidak dihapus.
 
-### Impor lineup dan ofisial
-1. Masuk ke `/admin`, lalu buka tab **PERTANDINGAN & SKOR**.
-2. Pada bagian **Impor lineup & ofisial dari Excel**, unduh template dan isi sheet `Data`.
-3. Isi satu baris untuk setiap pemain/ofisial. Tanggal dan nama tim harus cocok dengan jadwal; sisi tim adalah `Home` atau `Away`, dan jenis adalah `Pemain` atau `Ofisial`.
-4. Unggah file `.xlsx`. Pemain/ofisial untuk sisi dan jenis yang diunggah akan menggantikan daftar sebelumnya; bagian lain yang tidak disertakan tetap tersimpan.
-5. Lineup tersedia pada jadwal publik melalui tombol **Lineup & ofisial tim**.
+### Lineup dan ofisial pertandingan
+Lineup/ofisial yang sudah tersimpan tetap dapat dilihat pada jadwal publik melalui tombol **Lineup & ofisial tim**. Form impor lineup sementara disembunyikan dari panel admin; data yang sudah tersimpan tidak dihapus.
 
-Kolom pemain yang wajib diisi: tanggal pertandingan, tim home, tim away, sisi tim, jenis, nama, dan nomor punggung (0–99). Untuk ofisial, isi nama serta posisi/jabatan dan kosongkan nomor punggung. Kolom jam digunakan bila ada lebih dari satu pertandingan dengan tanggal dan pasangan tim yang sama. Maksimal 500 baris data dan ukuran file 2 MB per impor.
+### Impor peserta tim event
+1. Masuk ke `/admin`, lalu pada panel **EVENT** buka bagian **Impor peserta tim event dari Excel**.
+2. Pilih event dan unduh template peserta. Isi satu baris untuk setiap tim pada sheet `Data`.
+3. Masukkan logo PNG/JPG ke kolom **Logo Tim** pada baris yang sama dengan nama tim.
+4. Unggah file `.xlsx`. Impor akan mengganti seluruh daftar peserta event yang dipilih.
+5. Saat membuat jadwal pertandingan, pilih event lalu pilih tim home dan away dari daftar peserta. Logo setiap tim terpasang otomatis; tim yang tidak terdaftar dapat dimasukkan secara manual.
+6. Halaman event menampilkan jumlah peserta, nama, dan logo tim pada navigasi **PESERTA TIM**. Daftar peserta terbatas 200 tim per event, dengan ukuran maksimal 1 MB per logo dan total 8 MB.
+
+### Pendaftaran tim lewat link event
+1. Di `/admin`, buka pengaturan pendaftaran pada event dan buat link khusus. Salin link untuk dibagikan kepada calon peserta.
+2. Peserta membuka link, mengisi nama tim, dan mengunggah logo PNG/JPG/WEBP (maksimal 1 MB). Pendaftaran menunggu persetujuan admin.
+3. Admin dapat menyetujui pendaftaran untuk menambahkan tim ke daftar peserta, atau menolaknya. Pendaftaran yang ditolak langsung dihapus dan tidak ditampilkan lagi di panel.
+4. Pendaftaran tim yang sudah disetujui dapat dihapus dari daftar peserta event melalui tombol **Hapus tim**. Jadwal pertandingan tetap tersimpan.
+5. Gunakan tombol ekspor Excel untuk mengunduh daftar pendaftar yang masih menunggu, peserta yang disetujui, dan logo.
+6. Link pendaftaran dapat dinonaktifkan atau diganti kapan saja; link lama langsung tidak berlaku. Impor peserta manual tetap tersedia dan menggantikan daftar peserta event.
 
 ## Sebelum dipublikasikan ke internet
 - Wajib gunakan HTTPS dan set `NODE_ENV=production`.
@@ -74,7 +86,7 @@ Kolom pemain yang wajib diisi: tanggal pertandingan, tim home, tim away, sisi ti
 - Untuk deployment multi-instance, gunakan session store/database terkelola yang sesuai.
 
 ## Catatan kontak
-Nomor WhatsApp belum diisi karena belum diberikan. Login ke `/admin`, pilih **Kontak & Profil**, isi nomor dengan format internasional angka, misalnya `62812...` (tanpa spasi). Tautan Instagram IFL Event dan Fafage Academy sudah terpasang.
+Nomor WhatsApp admin dapat diatur terpisah. Login ke `/admin`, pilih **Kontak & Profil**, isi nomor Admin 1 dan/atau Admin 2 dengan kode negara, misalnya `62812...` (tanpa tanda + atau spasi). Tombol untuk nomor yang kosong tidak ditampilkan. Tautan Instagram IFL Event dan Fafage Academy sudah terpasang.
 
 ## Struktur
 ```text

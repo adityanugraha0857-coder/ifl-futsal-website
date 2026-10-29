@@ -3,6 +3,11 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const whatsappUrl = value => {
+    const digits = String(value || '').replace(/\D/g, '');
+    if (!digits) return '';
+    return `https://wa.me/${digits.startsWith('0') ? `62${digits.slice(1)}` : digits}`;
+  };
   const formatDate = value => {
     if (!value) return 'Tanggal menyusul';
     const d = new Date(`${value}T00:00:00`);
@@ -22,6 +27,7 @@
     settings: {
       contact_name: 'Panitia IFL Event',
       contact_phone: '6281234567890',
+      contact_phone_2: '',
       contact_email: 'ifl.event@gmail.com',
       venue: 'Pontianak, Kalimantan Barat',
       about: 'IFL Event menghadirkan kompetisi futsal, kegiatan komunitas, expo, dan seminar. Bersama Fafage Academy Pontianak, kami mendukung perkembangan talenta futsal dan semangat sportivitas.'
@@ -48,8 +54,12 @@
     $('#contactName').textContent = s.contact_name || 'Panitia IFL Event';
     $('#contactVenue').textContent = s.venue || 'Pontianak, Kalimantan Barat';
     $('#contactPhone').textContent = s.contact_phone || 'Nomor kontak diatur admin';
-    const digits = String(s.contact_phone || '').replace(/[^\d+]/g, '');
-    $('#phoneLink').href = digits ? `https://wa.me/${digits.replace(/^\+/, '')}` : '#kontak';
+    const phoneUrl = whatsappUrl(s.contact_phone);
+    $('#phoneLink').href = phoneUrl || '#kontak';
+    const phoneUrl2 = whatsappUrl(s.contact_phone_2);
+    $('#contactPhone2').textContent = s.contact_phone_2 || 'Nomor kontak diatur admin';
+    $('#phoneLink2').href = phoneUrl2 || '#kontak';
+    $('#phoneLink2').hidden = !phoneUrl2;
     $('#contactEmail').textContent = s.contact_email || 'Belum diatur';
     $('#emailLink').href = s.contact_email ? `mailto:${encodeURIComponent(s.contact_email)}` : '#kontak';
     $('#aboutText').textContent = s.about || 'IFL Event menghadirkan kompetisi futsal dan kegiatan komunitas bersama Fafage Academy Pontianak.';

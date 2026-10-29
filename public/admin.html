@@ -39,6 +39,32 @@
           </div><button class="admin-btn" type="submit">SIMPAN EVENT ↗</button> <button class="admin-btn secondary" id="cancelEventEdit" type="button" hidden>BATAL EDIT</button><p class="form-message" id="eventMessage" role="status"></p>
         </form></div>
         <div class="admin-card"><h2>Daftar event</h2><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>EVENT</th><th>TANGGAL</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="eventsTable"></tbody></table></div></div>
+          <div class="admin-card"><h2>Impor peserta tim event dari Excel</h2>
+            <p class="password-hint">Pilih event, unduh template, isi satu baris per tim dan pasang logo PNG/JPG di kolom B pada baris yang sama. Impor mengganti seluruh daftar peserta event yang dipilih; maksimal 200 tim dan 1 MB per logo.</p>
+            <p><a class="admin-btn secondary" href="/api/admin/participants/template">UNDUH TEMPLATE PESERTA ↧</a></p>
+            <form id="participantsForm">
+              <div class="admin-form-grid">
+                <div class="form-field full"><label for="participantsEvent">EVENT *</label><select id="participantsEvent" required><option value="">Pilih event</option></select></div>
+                <div class="form-field full"><label for="participantsFile">FILE EXCEL (.XLSX) *</label><input id="participantsFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></div>
+              </div>
+              <button class="admin-btn" type="submit">UNGGAH PESERTA TIM ↗</button><p class="form-message" id="participantsMessage" role="status"></p>
+            </form>
+          </div>
+          <div class="admin-card"><h2>Pendaftaran tim lewat link</h2>
+            <p class="password-hint">Buat link khusus event untuk dibagikan ke calon peserta. Form hanya meminta nama tim dan logo. Tim masuk ke daftar peserta setelah disetujui admin; pendaftaran yang ditolak langsung dihapus.</p>
+            <div class="admin-form-grid">
+              <div class="form-field full"><label for="registrationEvent">EVENT</label><select id="registrationEvent"><option value="">Pilih event</option></select></div>
+              <div class="form-field full"><label for="registrationLink">LINK PENDAFTARAN</label><input id="registrationLink" type="url" readonly placeholder="Buat link untuk event yang dipilih"></div>
+            </div>
+            <button class="admin-btn" id="createRegistrationLink" type="button">BUAT / GANTI LINK ↗</button>
+            <button class="admin-btn secondary" id="copyRegistrationLink" type="button" disabled>SALIN LINK</button>
+            <button class="admin-btn danger" id="revokeRegistrationLink" type="button" disabled>NONAKTIFKAN LINK</button>
+            <a class="admin-btn secondary" id="exportRegistrations" href="#" hidden>UNDUH DAFTAR EXCEL ↧</a>
+            <p class="form-message" id="registrationLinkMessage" role="status"></p>
+            <h3>Pendaftar tim</h3>
+            <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>TIM / LOGO</th><th>TANGGAL</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="registrationsTable"></tbody></table></div>
+            <p class="password-hint">Excel memuat pendaftar, status persetujuan, peserta dari impor manual, dan logo tim.</p>
+          </div>
       </section>
       <section id="matchesPanel" class="admin-panel">
         <div class="admin-card"><h2 id="matchFormTitle">Tambah pertandingan</h2><form id="matchForm"><input type="hidden" id="matchId">
@@ -47,36 +73,33 @@
             <div class="form-field full"><label for="matchCategory">KATEGORI EVENT</label><select id="matchCategory"><option value="">Pilih event terlebih dahulu</option></select></div>
             <div class="form-field"><label for="matchDate">TANGGAL *</label><input id="matchDate" type="date" required></div>
             <div class="form-field"><label for="matchTime">JAM</label><input id="matchTime" type="time"></div>
-            <div class="form-field"><label for="homeTeam">TIM HOME *</label><input id="homeTeam" maxlength="100" required placeholder="Nama tim A"></div>
-            <div class="form-field"><label for="awayTeam">TIM AWAY *</label><input id="awayTeam" maxlength="100" required placeholder="Nama tim B"></div>
+            <div class="form-field"><label for="homeTeamSelect">TIM HOME *</label><select id="homeTeamSelect" hidden><option value="">Pilih peserta event</option></select><input id="homeTeam" maxlength="100" required placeholder="Nama tim A"></div>
+            <div class="form-field"><label for="awayTeamSelect">TIM AWAY *</label><select id="awayTeamSelect" hidden><option value="">Pilih peserta event</option></select><input id="awayTeam" maxlength="100" required placeholder="Nama tim B"></div>
+            <div class="form-field full"><small class="password-hint">Pilih tim peserta event agar nama dan logo terisi otomatis. Jika tim belum terdaftar, pilih <b>Input tim manual…</b>.</small></div>
             <div class="form-field"><label for="homeLogo">LOGO TIM HOME</label><input id="homeLogo" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"><div class="logo-upload-preview"><img id="homeLogoPreview" alt="Preview logo tim home" hidden><span id="homeLogoStatus">Belum ada logo.</span></div><small class="password-hint">Logo otomatis menyesuaikan kotak tanpa dipotong atau berubah bentuk.</small><label id="homeLogoRemoveWrap" class="logo-remove" hidden><input id="homeLogoRemove" type="checkbox"> Hapus logo tim home</label></div>
             <div class="form-field"><label for="awayLogo">LOGO TIM AWAY</label><input id="awayLogo" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"><div class="logo-upload-preview"><img id="awayLogoPreview" alt="Preview logo tim away" hidden><span id="awayLogoStatus">Belum ada logo.</span></div><small class="password-hint">Logo otomatis menyesuaikan kotak tanpa dipotong atau berubah bentuk.</small><label id="awayLogoRemoveWrap" class="logo-remove" hidden><input id="awayLogoRemove" type="checkbox"> Hapus logo tim away</label></div>
             <div class="form-field"><label for="homeScore">SKOR HOME</label><input id="homeScore" type="number" min="0" max="99" placeholder="Kosongkan jika belum main"></div>
             <div class="form-field"><label for="awayScore">SKOR AWAY</label><input id="awayScore" type="number" min="0" max="99" placeholder="Kosongkan jika belum main"></div>
+            <div class="form-field"><label for="homePenaltyScore">SKOR PENALTI HOME</label><input id="homePenaltyScore" type="number" min="0" max="99" placeholder="Jika skor gugur imbang"></div>
+            <div class="form-field"><label for="awayPenaltyScore">SKOR PENALTI AWAY</label><input id="awayPenaltyScore" type="number" min="0" max="99" placeholder="Jika skor gugur imbang"></div>
             <div class="form-field"><label for="matchStatus">STATUS</label><select id="matchStatus"><option>Terjadwal</option><option>Selesai</option><option>Ditunda</option><option>Dibatalkan</option></select></div>
+            <div class="form-field"><label for="matchPhase">FASE PERTANDINGAN</label><select id="matchPhase"><option value="other">Lainnya / tidak masuk klasemen</option><option value="group">Fase grup</option><option value="knockout">Babak gugur</option></select></div>
             <div class="form-field"><label for="matchRound">BABAK / GRUP</label><input id="matchRound" maxlength="100" placeholder="Penyisihan Grup A"></div>
             <div class="form-field full"><label for="matchVenue">LAPANGAN / LOKASI</label><input id="matchVenue" maxlength="160" placeholder="GOR ..."></div>
-          </div><button class="admin-btn" type="submit">SIMPAN PERTANDINGAN ↗</button> <button class="admin-btn secondary" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button><p class="form-message" id="matchMessage" role="status"></p>
+          </div><p class="password-hint" id="generatedMatchNote" hidden>Pertandingan ini bagian dari bagan otomatis. Peserta dan fase diisi sistem; atur tanggal, lokasi, skor, dan penalti di sini. Skor imbang pada babak gugur harus diputuskan dengan adu penalti.</p><button class="admin-btn" type="submit">SIMPAN PERTANDINGAN ↗</button> <button class="admin-btn secondary" id="cancelMatchEdit" type="button" hidden>BATAL EDIT</button><p class="form-message" id="matchMessage" role="status"></p>
         </form></div>
-        <div class="admin-card"><h2>Impor lineup & ofisial dari Excel</h2>
-          <p class="password-hint">Unduh template, isi satu baris untuk setiap pemain atau ofisial, lalu unggah file .xlsx. Pertandingan dicocokkan berdasarkan tanggal dan nama kedua tim. Bagian pemain/ofisial yang diunggah akan menggantikan daftar sebelumnya pada sisi tersebut.</p>
-          <p><a class="admin-btn secondary" href="/api/admin/lineups/template">UNDUH TEMPLATE EXCEL ↧</a></p>
-          <form id="lineupForm">
-            <div class="form-field"><label for="lineupFile">FILE EXCEL (.XLSX) *</label><input id="lineupFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></div>
-            <button class="admin-btn" type="submit">UNGGAH & TAMPILKAN ↗</button><p class="form-message" id="lineupMessage" role="status"></p>
-          </form>
-        </div>
         <div class="admin-card"><h2>Jadwal & hasil</h2><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>TANGGAL</th><th>PERTANDINGAN</th><th>SKOR</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody id="matchesTable"></tbody></table></div></div>
       </section>
       <section id="settingsPanel" class="admin-panel"><div class="admin-card"><h2>Kontak panitia & profil</h2><form id="settingsForm">
         <div class="admin-form-grid">
           <div class="form-field"><label for="settingName">NAMA KONTAK</label><input id="settingName" maxlength="250"></div>
-          <div class="form-field"><label for="settingPhone">WHATSAPP / TELEPON</label><input id="settingPhone" maxlength="250" placeholder="Contoh: 6281234567890"></div>
+          <div class="form-field"><label for="settingPhone">NOMOR WHATSAPP ADMIN 1</label><input id="settingPhone" type="tel" maxlength="30" placeholder="Contoh: 6281234567890"></div>
+          <div class="form-field"><label for="settingPhone2">NOMOR WHATSAPP ADMIN 2</label><input id="settingPhone2" type="tel" maxlength="30" placeholder="Contoh: 6289876543210"></div>
           <div class="form-field"><label for="settingEmail">EMAIL</label><input id="settingEmail" type="email" maxlength="250"></div>
           <div class="form-field"><label for="settingVenue">LOKASI UMUM</label><input id="settingVenue" maxlength="250"></div>
           <div class="form-field full"><label for="settingAbout">DESKRIPSI IFL EVENT</label><textarea id="settingAbout" maxlength="2000"></textarea></div>
         </div><button class="admin-btn" type="submit">SIMPAN PROFIL ↗</button><p class="form-message" id="settingsMessage" role="status"></p>
-      </form><p class="password-hint">Instagram resmi telah dipasang: @ifl.event dan @fafageacademy.pontianak. Untuk keamanan, nomor WhatsApp disimpan sebagai data teks dan dipakai membuat tautan WhatsApp.</p></div></section>
+      </form><p class="password-hint">Masukkan nomor dengan kode negara tanpa tanda + atau spasi, misalnya 6281234567890. Kedua tombol WhatsApp ditampilkan di halaman publik jika nomornya diisi.</p><p class="password-hint">Instagram resmi telah dipasang: @ifl.event dan @fafageacademy.pontianak.</p></div></section>
       <section id="passwordPanel" class="admin-panel"><div class="admin-card"><h2>Ganti password admin</h2><form id="passwordForm" class="admin-form-grid">
         <div class="form-field full"><label for="currentPassword">PASSWORD SAAT INI</label><input id="currentPassword" type="password" autocomplete="current-password" required></div>
         <div class="form-field full"><label for="newPassword">PASSWORD BARU (MINIMAL 12 KARAKTER)</label><input id="newPassword" type="password" autocomplete="new-password" minlength="12" maxlength="200" required></div>

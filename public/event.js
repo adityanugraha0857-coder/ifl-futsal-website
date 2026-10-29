@@ -28,7 +28,12 @@
   }
   function matchCard(match) {
     const hasScore = match.home_score !== null && match.home_score !== undefined && match.away_score !== null && match.away_score !== undefined;
+    const hasPenaltyScore = match.home_penalty_score !== null && match.home_penalty_score !== undefined &&
+      match.away_penalty_score !== null && match.away_penalty_score !== undefined;
     const score = hasScore ? `${Number(match.home_score)} <span class="versus">:</span> ${Number(match.away_score)}` : '<span class="versus">VS</span>';
+    const penaltyScore = hasPenaltyScore
+      ? `<small class="penalty-score">Penalti ${Number(match.home_penalty_score)} : ${Number(match.away_penalty_score)}</small>`
+      : '';
     const homePlayers = match.lineups?.home || [];
     const awayPlayers = match.lineups?.away || [];
     const homeOfficials = match.officials?.home || [];
@@ -36,7 +41,7 @@
     const hasRoster = homePlayers.length || awayPlayers.length || homeOfficials.length || awayOfficials.length;
     return `<article class="match-row">
       <div class="match-date"><strong>${escapeHtml(formatDate(match.match_date))}</strong><span>${escapeHtml(match.match_time || 'Waktu menyusul')}</span></div>
-      <div><div class="match-main"><div class="team team-home">${teamIdentity(match.home_team,match.home_logo)}</div><div class="score">${score}</div><div class="team team-away">${teamIdentity(match.away_team,match.away_logo)}</div></div>
+      <div><div class="match-main"><div class="team team-home">${teamIdentity(match.home_team,match.home_logo)}</div><div class="score">${score}${penaltyScore}</div><div class="team team-away">${teamIdentity(match.away_team,match.away_logo)}</div></div>
       <div class="match-details">${match.event_category ? `<b>${escapeHtml(match.event_category)}</b> · ` : ''}${escapeHtml(match.round_name || 'Pertandingan')} ${match.venue ? `· ${escapeHtml(match.venue)}` : ''}</div>
       ${hasRoster ? `<details class="match-roster-details"><summary>Lineup & ofisial tim</summary><div class="match-roster-grid">${rosterSide(match.home_team,homePlayers,homeOfficials)}${rosterSide(match.away_team,awayPlayers,awayOfficials)}</div></details>` : ''}</div>
       <div class="match-state">${escapeHtml(match.status || (hasScore ? 'Selesai' : 'Terjadwal'))}<small>${escapeHtml(match.round_name || '')}</small></div>
